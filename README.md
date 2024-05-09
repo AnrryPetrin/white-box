@@ -1,26 +1,11 @@
-# Errors in the Code
-This Java code attempts to establish a connection to a MySQL database and verify user credentials. However, there are several errors in the code that need to be addressed:
-![](/img/CAIXA%20BRANCA.png)
-
-1. **ClassNotFoundException for MySQL Driver Manager**: In the `conectarBD()` method, the line `Class.forName("com.mysql.Driver.Manager").newInstance();` is incorrect. The correct class name for MySQL driver manager is `com.mysql.jdbc.Driver`, not `com.mysql.Driver.Manager`. This line should be changed to:
-   ```java
-   Class.forName("com.mysql.jdbc.Driver");
-   ```
-
-2. **SQL Injection Vulnerability**: In the `verificarUsuario()` method, the SQL query is concatenated using string manipulation. This is vulnerable to SQL injection attacks. It's recommended to use parameterized queries instead to prevent such vulnerabilities. The corrected SQL query should look like:
-   ```java
-   sql += "select nome from usuarios ";
-   sql +="where login = ? and senha = ?";
-   ```
-   And then set the parameters using `PreparedStatement`:
-   ```java
-   PreparedStatement st = conn.prepareStatement(sql);
-   st.setString(1, usuario);
-   st.setString(2, senha);
-   ```
-
-3. **Variable Naming Error**: In the `verificarUsuario()` method, the parameters are named `usuario` and `senha`, but the SQL query is trying to use variables named `login` and `senha`. It seems there is a variable naming inconsistency. You should use the correct variable names in the SQL query.
-
-4. **Resource Management**: The code lacks proper resource management for the database connections, statements, and result sets. It's important to close these resources properly after their use to avoid resource leaks. This can be done using try-with-resources statement in Java.
-
-By addressing these errors, the code will be more secure, maintainable, and less prone to bugs.
+# Flow Graph
+1. Node 1 (conectarBD()) is connected to Node 2 (try block) and Node 6 (verificarUsuario() method call).
+2. Node 2 (try block) is connected to Node 4 (return conn) and Node 3 (catch block).
+3. Node 3 (catch block) is connected back to Node 4 (return conn).
+4. Node 6 (verificarUsuario() method call) is connected to Node 5 (String sql = "").
+5. Node 5 (String sql = "") is connected to Node 7 (Prepare SQL statement).
+6. Node 7 (Prepare SQL statement) is connected to Node 8 (Set parameters).
+7. Node 8 (Set parameters) is connected to Node 9 (Execute query).
+8. Node 9 (Execute query) is connected to Node 10 (if condition).
+9. Node 10 (if condition) is connected to Node 4 (return conn) and Node 11 (return result).
+![](/img/White%20Box%20Flow%20Graph.png)
