@@ -9,3 +9,17 @@
 8. Node 9 (Execute query) is connected to Node 10 (if condition).
 9. Node 10 (if condition) is connected to Node 4 (return conn) and Node 11 (return result).
 ![](/img/White%20Box%20Flow%20Graph.png)
+
+## Cyclomatic Complexity Calculation
+V(G)=E−N+2
+
+V(G)=12−11+2
+
+V(G)=1+2
+
+V(G)=3
+
+## Paths
+- 1->6->5->7->8->9->10->11
+- 1->2->3->4->10->11
+- 1->2->4->10->11
